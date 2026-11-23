@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Philippine Civil Service Exam (CSE) Reviewer</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,263 +35,305 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overscroll-behavior-y: contain;
+            padding-left: env(safe-area-inset-left, 0px);
+            padding-right: env(safe-area-inset-right, 0px);
+        }
+        button, label, a {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .safe-top {
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        .safe-bottom {
+            padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+        }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @media (pointer: coarse) {
+            .custom-scrollbar {
+                scrollbar-width: none;
+            }
+            .custom-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900">
+<body class="bg-slate-50 text-slate-800 min-h-[100dvh] flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900">
 
     <!-- Header / Navbar -->
-    <header id="main-header" class="bg-navy-900 text-white border-b-4 border-govYellow shadow-lg sticky top-0 z-50 transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-govBlue flex items-center justify-center font-bold text-govYellow border-2 border-govYellow text-xl shadow">
+    <header id="main-header" class="bg-navy-900 text-white border-b-4 border-govYellow shadow-lg sticky top-0 z-50 transition-all duration-300 safe-top">
+        <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex justify-between items-center gap-2 sm:gap-3">
+            <div class="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-govBlue flex items-center justify-center font-bold text-govYellow border-2 border-govYellow text-base sm:text-xl shadow flex-shrink-0">
                     CSC
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
-                        Philippine CSE Reviewer
-                        <span class="bg-govYellow text-navy-900 text-xs px-2 py-0.5 rounded font-extrabold uppercase">2026 Edition</span>
+                <div class="min-w-0">
+                    <h1 class="font-bold text-sm sm:text-lg leading-tight tracking-wide flex items-center gap-1.5 sm:gap-2 truncate">
+                        <span class="truncate">Philippine CSE Reviewer</span>
+                        <span class="bg-govYellow text-navy-900 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded font-extrabold uppercase flex-shrink-0">2026</span>
                     </h1>
-                    <p class="text-xs text-slate-300">Based on Official Civil Service Commission Exam Standards &bull; Compiled by Jeffry Lacanglacang</p>
+                    <p class="text-[11px] sm:text-xs text-slate-300 truncate">CSC Exam Standards &bull; Compiled by Jeffry Lacanglacang</p>
                 </div>
             </div>
             
-            <div class="flex items-center space-x-3 text-xs md:text-sm">
-                <span class="bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-2">
+            <div class="flex items-center space-x-2 sm:space-x-3 text-xs md:text-sm flex-shrink-0">
+                <span class="hidden sm:flex bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 items-center gap-2">
                     <i class="fa-solid fa-bullseye text-govYellow"></i>
                     <span>Passing Rate: <strong class="text-govYellow">80%</strong></span>
                 </span>
-                <button type="button" onclick="resetApp()" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 font-medium shadow-sm text-xs">
-                    <i class="fa-solid fa-house"></i> Home
+                <button type="button" onclick="resetApp()" class="min-h-[40px] bg-slate-700 hover:bg-slate-600 active:bg-slate-500 text-white px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 font-medium shadow-sm text-xs">
+                    <i class="fa-solid fa-house"></i> <span>Home</span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Main Content Container -->
-    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
+    <main class="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-6 flex-grow w-full">
         
         <!-- WELCOME / DASHBOARD SCREEN -->
-        <section id="welcome-screen" class="space-y-6">
+        <section id="welcome-screen" class="space-y-5 sm:space-y-6">
             <!-- Hero Banner -->
-            <div class="bg-gradient-to-r from-navy-900 via-govBlue to-blue-900 text-white rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden border border-blue-800">
-                <div class="relative z-10 max-w-3xl space-y-4">
-                    <span class="inline-block bg-blue-500/30 text-blue-200 border border-blue-400/30 text-xs px-3 py-1 rounded-full font-semibold">
-                        <i class="fa-solid fa-graduation-cap mr-1"></i> Practice Test &amp; Full Simulation
-                    </span>
-                    <h2 class="text-2xl md:text-4xl font-extrabold text-white leading-tight">
+            <div class="bg-gradient-to-r from-navy-900 via-govBlue to-blue-900 text-white rounded-2xl p-5 sm:p-6 md:p-8 shadow-xl relative overflow-hidden border border-blue-800">
+                <div class="relative z-10 max-w-3xl space-y-3 sm:space-y-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-block bg-blue-500/30 text-blue-200 border border-blue-400/30 text-xs px-3 py-1 rounded-full font-semibold">
+                            <i class="fa-solid fa-graduation-cap mr-1"></i> Practice Test &amp; Full Simulation
+                        </span>
+                        <span class="sm:hidden inline-block bg-navy-950/60 text-govYellow border border-govYellow/40 text-xs px-2.5 py-1 rounded-full font-bold">
+                            Passing: 80%
+                        </span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl md:text-4xl font-extrabold text-white leading-tight">
                         Ace Your Career Service Examination (Professional &amp; Sub-Prof)
                     </h2>
-                    <p class="text-slate-200 text-sm md:text-base leading-relaxed">
+                    <p class="text-slate-200 text-xs sm:text-sm md:text-base leading-relaxed">
                         Test your readiness with timed sessions, immediate performance evaluations, strength and weakness analytics, and step-by-step explanations across all major CSE competency categories.
                     </p>
-                    <div class="pt-2 flex flex-wrap gap-4">
-                        <button type="button" onclick="startQuiz('all', 10)" class="bg-govYellow hover:bg-yellow-400 text-navy-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95 flex items-center gap-2 text-base">
+                    <div class="pt-2 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <button type="button" onclick="startQuiz('all', 10)" class="w-full sm:w-auto min-h-[48px] justify-center bg-govYellow hover:bg-yellow-400 active:bg-yellow-500 text-navy-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-[0.99] flex items-center gap-2 text-sm sm:text-base">
                             <i class="fa-solid fa-play"></i> Start 10-Q Quick Review
                         </button>
-                        <button type="button" onclick="startQuiz('all', 90)" class="bg-white hover:bg-slate-100 text-navy-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-95 flex items-center gap-2 text-base border border-slate-200">
+                        <button type="button" onclick="startQuiz('all', 90)" class="w-full sm:w-auto min-h-[48px] justify-center bg-white hover:bg-slate-100 active:bg-slate-200 text-navy-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition transform active:scale-[0.99] flex items-center gap-2 text-sm sm:text-base border border-slate-200">
                             <i class="fa-solid fa-clock-rotate-left"></i> Take Full 90-Q Mock Exam
                         </button>
                     </div>
                 </div>
-                <i class="fa-solid fa-award absolute -right-6 -bottom-6 text-white/10 text-9xl pointer-events-none"></i>
+                <i class="fa-solid fa-award absolute -right-6 -bottom-6 text-white/10 text-8xl sm:text-9xl pointer-events-none"></i>
             </div>
 
             <!-- Exam Information Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4">
-                    <div class="p-3 bg-blue-50 text-govBlue rounded-lg text-xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3.5 sm:gap-4">
+                    <div class="p-2.5 sm:p-3 bg-blue-50 text-govBlue rounded-lg text-lg sm:text-xl flex-shrink-0">
                         <i class="fa-solid fa-stopwatch"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-slate-800">Live Session Timer</h3>
+                        <h3 class="font-bold text-sm sm:text-base text-slate-800">Live Session Timer</h3>
                         <p class="text-xs text-slate-500 mt-1">Tracks your elapsed testing time with a full-screen distraction-free mode.</p>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4">
-                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg text-xl">
+                <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3.5 sm:gap-4">
+                    <div class="p-2.5 sm:p-3 bg-emerald-50 text-emerald-600 rounded-lg text-lg sm:text-xl flex-shrink-0">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-slate-800">80% Passing Target</h3>
+                        <h3 class="font-bold text-sm sm:text-base text-slate-800">80% Passing Target</h3>
                         <p class="text-xs text-slate-500 mt-1">Simulates the standard Civil Service passing score with detailed analytics.</p>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4">
-                    <div class="p-3 bg-amber-50 text-amber-600 rounded-lg text-xl">
+                <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3.5 sm:gap-4">
+                    <div class="p-2.5 sm:p-3 bg-amber-50 text-amber-600 rounded-lg text-lg sm:text-xl flex-shrink-0">
                         <i class="fa-solid fa-lightbulb"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-slate-800">Detailed Explanations</h3>
-                        <p class="text-xs text-slate-500 mt-1">Includes step-by-step solutions and answer keys after submission.</p>
+                        <h3 class="font-bold text-sm sm:text-base text-slate-800">Detailed Explanations</h3>
+                        <p class="text-xs text-slate-500 mt-1">Includes step-by-step solutions, answer keys, and reference links after submission.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Practice by Subject Category -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                <h3 class="font-bold text-lg text-slate-800 mb-4 flex items-center gap-2">
+            <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+                <h3 class="font-bold text-base sm:text-lg text-slate-800 mb-3 sm:mb-4 flex items-center gap-2">
                     <i class="fa-solid fa-layer-group text-govBlue"></i> Practice by Specific Category
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3" id="category-selector-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3" id="category-selector-grid">
                     <!-- Populated dynamically via JS -->
                 </div>
             </div>
         </section>
 
         <!-- QUIZ ENGINE SCREEN -->
-        <section id="quiz-screen" class="hidden space-y-6">
+        <section id="quiz-screen" class="hidden space-y-4 sm:space-y-6 pb-20 md:pb-0">
             <!-- Progress Bar & Session Header -->
-            <div id="quiz-header" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4 transition-all duration-300">
-                <div class="w-full md:w-auto flex items-center gap-3">
-                    <span id="category-badge" class="bg-govBlue text-white text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider">
+            <div id="quiz-header" class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3 sm:gap-4 transition-all duration-300">
+                <div class="flex items-center justify-between md:justify-start gap-2 sm:gap-3">
+                    <span id="category-badge" class="bg-govBlue text-white text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full font-semibold uppercase tracking-wider truncate max-w-[190px] sm:max-w-none">
                         General Exam
                     </span>
-                    <span id="question-counter" class="text-xs font-bold text-slate-500">
+                    <span id="question-counter" class="text-xs font-bold text-slate-600 flex-shrink-0">
                         Question 1 of 10
                     </span>
                 </div>
 
-                <!-- Timer Display -->
-                <div class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200 text-xs font-bold text-slate-700">
-                    <i class="fa-regular fa-clock text-govBlue"></i>
-                    <span>Time Elapsed: <span id="timer-display">00:00</span></span>
+                <!-- Timer & Actions Row on Mobile, Inline on Desktop -->
+                <div class="flex items-center justify-between md:justify-end gap-2 sm:gap-3">
+                    <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-100 px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-700">
+                        <i class="fa-regular fa-clock text-govBlue"></i>
+                        <span><span class="hidden sm:inline">Time Elapsed: </span><span id="timer-display">00:00</span></span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button type="button" id="focus-toggle-btn" onclick="toggleFocusMode()" class="min-h-[36px] bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 border border-slate-300 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition" title="Toggle Focus Mode (Shortcut: F)">
+                            <i id="focus-btn-icon" class="fa-solid fa-expand"></i> <span id="focus-btn-label">Focus</span>
+                        </button>
+                        <button type="button" onclick="confirmAbandonQuiz()" class="min-h-[36px] px-2 text-xs text-slate-500 hover:text-red-600 active:text-red-700 font-semibold flex items-center gap-1 transition">
+                            <i class="fa-solid fa-xmark"></i> <span>Quit</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Progress Track -->
-                <div class="w-full md:w-1/4 bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                <div class="w-full md:w-1/4 md:order-3 bg-slate-100 rounded-full h-2.5 sm:h-3 overflow-hidden border border-slate-200">
                     <div id="progress-bar" class="bg-govBlue h-full transition-all duration-300 rounded-full" style="width: 10%;"></div>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <button type="button" id="focus-toggle-btn" onclick="toggleFocusMode()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
-                        <i id="focus-btn-icon" class="fa-solid fa-expand"></i> <span id="focus-btn-label">Focus Mode</span>
-                    </button>
-                    <button type="button" onclick="confirmAbandonQuiz()" class="text-xs text-slate-500 hover:text-red-600 font-semibold flex items-center gap-1 transition">
-                        <i class="fa-solid fa-xmark"></i> Quit
-                    </button>
                 </div>
             </div>
 
             <!-- Main Question & Options Card -->
-            <div id="question-card" class="bg-white rounded-2xl border border-slate-200 shadow-md p-6 md:p-8 relative transition-all duration-300">
+            <div id="question-card" class="bg-white rounded-2xl border border-slate-200 shadow-md p-4 sm:p-6 md:p-8 relative transition-all duration-300">
                 <!-- Floating Minimal Full-Screen Mode Header -->
-                <div id="focus-fullscreen-header" class="hidden flex justify-between items-center pb-4 mb-4 border-b border-slate-100">
+                <div id="focus-fullscreen-header" class="hidden flex justify-between items-center pb-3 sm:pb-4 mb-4 border-b border-slate-100">
                     <div class="flex items-center gap-2 text-xs font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg">
                         <i class="fa-regular fa-clock text-govBlue"></i>
-                        <span>Time Elapsed: <span id="fullscreen-timer-display">00:00</span></span>
+                        <span>Time: <span id="fullscreen-timer-display">00:00</span></span>
                     </div>
-                    <button type="button" onclick="toggleFocusMode()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5 transition">
+                    <button type="button" onclick="toggleFocusMode()" class="min-h-[38px] bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-compress"></i> Exit Full Screen
                     </button>
                 </div>
 
-                <!-- Question Category Header -->
-                <div class="text-xs font-bold text-govBlue uppercase tracking-widest mb-2 flex items-center gap-1.5 focus-hideable" id="q-category-title">
-                    <i class="fa-regular fa-bookmark"></i> Category Name
+                <!-- Question Category Header & Desktop Shortcut Hint -->
+                <div class="flex items-center justify-between gap-2 mb-2 focus-hideable">
+                    <div class="text-xs font-bold text-govBlue uppercase tracking-widest flex items-center gap-1.5" id="q-category-title">
+                        <i class="fa-regular fa-bookmark"></i> Category Name
+                    </div>
+                    <span class="hidden lg:inline-block text-[11px] text-slate-400">
+                        Shortcuts: <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-slate-600 font-mono">A–D</kbd> answer &bull; <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded text-slate-600 font-mono">&larr;/&rarr;</kbd> navigate
+                    </span>
                 </div>
 
                 <!-- Question Text -->
-                <h3 class="text-lg md:text-xl font-bold text-slate-900 leading-snug mb-6 whitespace-pre-line" id="q-text">
+                <h3 class="text-base sm:text-lg md:text-xl font-bold text-slate-900 leading-relaxed mb-5 sm:mb-6 whitespace-pre-line" id="q-text">
                     Question text will appear here...
                 </h3>
 
                 <!-- Context Graphic / Passage / Data Box -->
-                <div id="q-context" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 text-sm text-slate-700 leading-relaxed font-mono whitespace-pre-line">
+                <div id="q-context" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3.5 sm:p-4 mb-5 sm:mb-6 text-xs sm:text-sm text-slate-700 leading-relaxed font-mono whitespace-pre-line overflow-x-auto">
                     <!-- Dynamic Passage or Context Table -->
                 </div>
 
                 <!-- Choice Radio Options -->
-                <div class="space-y-3" id="q-options-container">
+                <div class="space-y-2.5 sm:space-y-3" id="q-options-container">
                     <!-- Dynamically populated options -->
                 </div>
             </div>
 
-            <!-- Quiz Navigation Bar -->
-            <div id="quiz-footer-nav" class="flex flex-wrap justify-between items-center gap-3 pt-2 transition-all duration-300">
-                <button type="button" id="btn-prev" onclick="navigateQuestion(-1)" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold px-5 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2 text-sm disabled:opacity-40 disabled:cursor-not-allowed">
-                    <i class="fa-solid fa-arrow-left"></i> Previous
-                </button>
-
+            <!-- Quiz Navigation Bar (Sticky Bottom on Mobile, Standard Bar on Desktop) -->
+            <div id="quiz-footer-nav" class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 pt-2.5 safe-bottom shadow-[0_-4px_12px_rgba(15,23,42,0.06)] md:static md:bg-transparent md:backdrop-blur-none md:border-t-0 md:p-0 md:shadow-none flex flex-col md:flex-row justify-between items-stretch md:items-center gap-2.5 md:gap-3 transition-all duration-300">
                 <!-- Quick Question Jump Grid -->
-                <div class="flex items-center gap-1.5 overflow-x-auto max-w-md py-1 custom-scrollbar" id="question-jump-grid">
+                <div class="flex items-center gap-1.5 overflow-x-auto w-full md:max-w-md md:order-2 py-0.5 custom-scrollbar" id="question-jump-grid">
                     <!-- Dots/Buttons for questions -->
                 </div>
 
-                <button type="button" id="btn-next" onclick="navigateQuestion(1)" class="bg-govBlue hover:bg-blue-800 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
-                    Next <i class="fa-solid fa-arrow-right"></i>
-                </button>
-                <button type="button" id="btn-submit" onclick="submitQuiz()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
-                    Submit Exam <i class="fa-solid fa-check-double"></i>
-                </button>
+                <div class="grid grid-cols-2 md:flex items-center justify-between gap-2.5 w-full md:w-auto md:contents">
+                    <button type="button" id="btn-prev" onclick="navigateQuestion(-1)" class="min-h-[46px] md:order-1 justify-center bg-white hover:bg-slate-100 active:bg-slate-200 text-slate-700 border border-slate-300 font-semibold px-4 sm:px-5 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2 text-sm disabled:opacity-40 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-arrow-left"></i> Previous
+                    </button>
+
+                    <button type="button" id="btn-next" onclick="navigateQuestion(1)" class="min-h-[46px] md:order-3 justify-center bg-govBlue hover:bg-blue-800 active:bg-blue-900 text-white font-semibold px-5 sm:px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                        Next <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button type="button" id="btn-submit" onclick="submitQuiz()" class="hidden min-h-[46px] md:order-3 justify-center bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold px-5 sm:px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2 text-sm">
+                        Submit Exam <i class="fa-solid fa-check-double"></i>
+                    </button>
+                </div>
             </div>
         </section>
 
         <!-- RESULTS & ANALYTICS SCORECARD SCREEN -->
-        <section id="results-screen" class="hidden space-y-6">
+        <section id="results-screen" class="hidden space-y-5 sm:space-y-6">
             <!-- Score Overview Card -->
-            <div id="status-card" class="rounded-2xl p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div id="status-card" class="rounded-2xl p-5 sm:p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6">
                 <div class="space-y-2 text-center md:text-left">
                     <span id="status-badge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest inline-block border">
                         PASSED
                     </span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold" id="status-title">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold" id="status-title">
                         Congratulations! You Passed!
                     </h2>
-                    <p class="text-sm opacity-90 max-w-xl" id="status-desc">
+                    <p class="text-xs sm:text-sm opacity-90 max-w-xl" id="status-desc">
                         You scored above the required 80% passing threshold for the Philippine Civil Service Examination.
                     </p>
                 </div>
 
                 <!-- Gauge / Big Score Display -->
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center min-w-[180px]">
+                <div class="w-full sm:w-auto bg-white/10 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/20 text-center min-w-[180px]">
                     <div class="text-xs uppercase font-semibold opacity-80 tracking-wider">Final Score</div>
-                    <div class="text-5xl font-black my-1" id="score-text">8/10</div>
-                    <div class="text-xs font-bold px-2 py-0.5 rounded bg-white/20 inline-block" id="score-percentage">80% Accuracy</div>
+                    <div class="text-4xl sm:text-5xl font-black my-1" id="score-text">8/10</div>
+                    <div class="text-xs font-bold px-2.5 py-0.5 rounded bg-white/20 inline-block" id="score-percentage">80% Accuracy</div>
                     <div class="text-xs opacity-80 mt-2">Time: <span id="final-time-display">00:00</span></div>
                 </div>
             </div>
 
             <!-- Subject Performance Breakdown -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+            <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-slate-100 pb-3">
+                    <h3 class="font-bold text-base sm:text-lg text-slate-800 flex items-center gap-2">
                         <i class="fa-solid fa-chart-pie text-govBlue"></i> Performance Breakdown by Category
                     </h3>
                     <span class="text-xs font-medium text-slate-500">Identifies areas needing improvement</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="category-breakdown-container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4" id="category-breakdown-container">
                     <!-- Populated dynamically via JS -->
                 </div>
             </div>
 
             <!-- Detailed Answer Key & Explanations -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-5 sm:space-y-6">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-4">
                     <div>
-                        <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                        <h3 class="font-bold text-base sm:text-lg text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-list-check text-govBlue"></i> Answer Key &amp; Detailed Explanations
                         </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Review your responses alongside solutions derived directly from CSE reference materials.</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Review your responses alongside solutions and reference links.</p>
                     </div>
                 </div>
 
                 <!-- Answer Key List -->
-                <div class="space-y-6" id="answer-key-container">
+                <div class="space-y-4 sm:space-y-6" id="answer-key-container">
                     <!-- Populated dynamically via JS -->
                 </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="flex flex-wrap justify-center gap-4 py-4">
-                <button type="button" onclick="resetApp()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-6 py-3 rounded-xl shadow-md transition flex items-center gap-2">
+                <button type="button" onclick="resetApp()" class="w-full sm:w-auto min-h-[48px] justify-center bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white font-bold px-6 py-3 rounded-xl shadow-md transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate-right"></i> Return to Dashboard
                 </button>
             </div>
@@ -298,7 +342,7 @@
     </main>
 
     <!-- Footer -->
-    <footer id="main-footer" class="bg-navy-950 text-slate-400 text-xs py-6 border-t border-slate-800 mt-12 transition-all duration-300">
+    <footer id="main-footer" class="bg-navy-950 text-slate-400 text-xs py-6 border-t border-slate-800 mt-8 sm:mt-12 transition-all duration-300 safe-bottom">
         <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
             <p class="font-medium text-slate-300">Philippine Civil Service Exam Interactive Reviewer</p>
             <p class="text-slate-500">Compliant with CSC Professional &amp; Sub-Professional Exam Syllabi. For practice &amp; educational purposes.</p>
@@ -309,7 +353,7 @@
     <script>
         const QUESTION_BANK = [
             // --- GRAPHS & CHARTS ---
-            { id: 1, category: "Graphs & Charts", question: "Refer to Insurance Securities. If Chinese Insurance stocks represent 3.5% of all securities (Total = 36,000,000; Stocks = 3,000,000; Chinese Origin = 30%), approximately how many Insurance bonds were Chinese?", options: ["9,200,000", "9,500,000", "10,800,000", "910,000"], answer: 1, explanation: "Total securities = 36M. Chinese origin = 30%. Chinese bonds = 30% - 3.5% (stocks) = 26.5%. 36,000,000 * 0.265 = 9,540,000 ~ 9,500,000." },
+            { id: 1, category: "Graphs & Charts", question: "Refer to Securities Data. If Chinese stocks represent 3.5% of all securities (Total = 36,000,000; Stocks = 3,000,000; Chinese Origin = 30%), approximately how many bonds were of Chinese origin?", options: ["9,200,000", "9,500,000", "10,800,000", "910,000"], answer: 1, explanation: "Total securities = 36M. Chinese origin = 30%. Chinese bonds = 30% - 3.5% (stocks) = 26.5%. 36,000,000 * 0.265 = 9,540,000 ~ 9,500,000." },
             { id: 2, category: "Graphs & Charts", question: "Based on Philippines FDI data (1992: 5.7M Pesos, 1997: 31.36M Pesos), what was the ratio of investment in 1997 over 1992?", options: ["5.50", "5.36", "5.64", "5.75"], answer: 0, explanation: "Ratio = 31.36 / 5.70 = 5.50." },
             { id: 3, category: "Graphs & Charts", question: "What was the absolute difference in FDI to the Philippines between 1996 (24.23M Pesos) and 1997 (31.36M Pesos)?", options: ["7.29 million", "7.13 million", "8.13 million", "None of these"], answer: 1, explanation: "31.36 - 24.23 = 7.13 million Pesos." },
             { id: 4, category: "Graphs & Charts", question: "In a company budget pie chart, if Personnel takes 45% and Operations takes 30% of a ₱10,000,000 budget, how much is the combined budget for both?", options: ["₱4,500,000", "₱3,000,000", "₱7,500,000", "₱8,000,000"], answer: 2, explanation: "45% + 30% = 75%. 75% of ₱10,000,000 = ₱7,500,000." },
@@ -393,16 +437,16 @@
             { id: 70, category: "Clerical Operations", question: "What is the purpose of a delivery receipt?", options: ["To acknowledge receipt of goods by the buyer", "To bill the customer", "To request salary", "To apply for leave"], answer: 0, explanation: "Delivery receipt confirms physical receipt of items delivered." },
 
             // --- PHILIPPINE CONSTITUTION & GENERAL INFO ---
-            { id: 71, category: "Philippine Constitution & Gen Info", question: "Under Article II, Section 18 of the 1987 Constitution, what is affirmed as a 'primary social economic force'?", options: ["Education", "Trade", "Labor", "Commerce"], answer: 2, explanation: "Article II, Sec 18 affirms labor as a primary social economic force." },
-            { id: 72, category: "Philippine Constitution & Gen Info", question: "Who is authorized to issue a search warrant or warrant of arrest?", options: ["Senator", "Judge", "Congressman", "Ombudsman"], answer: 1, explanation: "Article III, Sec 2 states warrants are issued upon probable cause determined personally by a judge." },
-            { id: 73, category: "Philippine Constitution & Gen Info", question: "Under Article III, Section 15, the writ of habeas corpus may ONLY be suspended in cases of rebellion or:", options: ["Martial law", "War", "Terrorism", "Invasion"], answer: 3, explanation: "Suspended in cases of invasion or rebellion when public safety requires." },
+            { id: 71, category: "Philippine Constitution & Gen Info", question: "Under Article II, Section 18 of the 1987 Constitution, what is affirmed as a 'primary social economic force'?", options: ["Education", "Trade", "Labor", "Commerce"], answer: 2, explanation: "Article II, Sec 18 affirms labor as a primary social economic force.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
+            { id: 72, category: "Philippine Constitution & Gen Info", question: "Who is authorized to issue a search warrant or warrant of arrest?", options: ["Senator", "Judge", "Congressman", "Ombudsman"], answer: 1, explanation: "Article III, Sec 2 states warrants are issued upon probable cause determined personally by a judge.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
+            { id: 73, category: "Philippine Constitution & Gen Info", question: "Under Article III, Section 15, the writ of habeas corpus may ONLY be suspended in cases of rebellion or:", options: ["Martial law", "War", "Terrorism", "Invasion"], answer: 3, explanation: "Suspended in cases of invasion or rebellion when public safety requires.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
             { id: 74, category: "Philippine Constitution & Gen Info", question: "Only province in the Philippines with an official English name:", options: ["Cebu", "Mountain Province", "General Santos", "Zambales"], answer: 1, explanation: "Mountain Province is the sole province with an English name." },
-            { id: 75, category: "Philippine Constitution & Gen Info", question: "What branch of government has the power to enact laws?", options: ["Executive", "Judicial", "Legislative", "Constitutional Commissions"], answer: 2, explanation: "Legislative branch (Congress: Senate & House of Representatives) enacts laws." },
-            { id: 76, category: "Philippine Constitution & Gen Info", question: "Who is the Commander-in-Chief of all armed forces of the Philippines?", options: ["Senate President", "Secretary of National Defense", "Chief Justice", "President"], answer: 3, explanation: "The President is the Commander-in-Chief under Article VII." },
-            { id: 77, category: "Philippine Constitution & Gen Info", question: "What is the national language of the Philippines according to the Constitution?", options: ["Tagalog", "English", "Filipino", "Cebuano"], answer: 2, explanation: "Article XIV specifies that the national language of the Philippines is Filipino." },
-            { id: 78, category: "Philippine Constitution & Gen Info", question: "How many constitutional commissioners compose the Civil Service Commission?", options: ["1 Chairman and 2 Commissioners", "1 Chairman and 4 Commissioners", "3 Commissioners total", "7 Commissioners"], answer: 0, explanation: "CSC is composed of a Chairman and two Commissioners." },
-            { id: 79, category: "Philippine Constitution & Gen Info", question: "What is the voting age requirement for Filipino citizens under the Constitution?", options: ["16 years old", "18 years old", "21 years old", "25 years old"], answer: 1, explanation: "Filipino citizens at least 18 years of age are qualified to vote." },
-            { id: 80, category: "Philippine Constitution & Gen Info", question: "Which court is the highest judicial tribunal in the Philippines?", options: ["Court of Appeals", "Sandiganbayan", "Supreme Court", "Ombudsman"], answer: 2, explanation: "The Supreme Court is the highest court of the land." },
+            { id: 75, category: "Philippine Constitution & Gen Info", question: "What branch of government has the power to enact laws?", options: ["Executive", "Judicial", "Legislative", "Constitutional Commissions"], answer: 2, explanation: "Legislative branch (Congress: Senate & House of Representatives) enacts laws.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
+            { id: 76, category: "Philippine Constitution & Gen Info", question: "Who is the Commander-in-Chief of all armed forces of the Philippines?", options: ["Senate President", "Secretary of National Defense", "Chief Justice", "President"], answer: 3, explanation: "The President is the Commander-in-Chief under Article VII.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
+            { id: 77, category: "Philippine Constitution & Gen Info", question: "What is the national language of the Philippines according to the Constitution?", options: ["Tagalog", "English", "Filipino", "Cebuano"], answer: 2, explanation: "Article XIV specifies that the national language of the Philippines is Filipino.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
+            { id: 78, category: "Philippine Constitution & Gen Info", question: "How many constitutional commissioners compose the Civil Service Commission?", options: ["1 Chairman and 2 Commissioners", "1 Chairman and 4 Commissioners", "3 Commissioners total", "7 Commissioners"], answer: 0, explanation: "CSC is composed of a Chairman and two Commissioners.", referenceUrl: "https://www.csc.gov.ph/", referenceLabel: "Civil Service Commission (CSC)" },
+            { id: 79, category: "Philippine Constitution & Gen Info", question: "What is the voting age requirement for Filipino citizens under the Constitution?", options: ["16 years old", "18 years old", "21 years old", "25 years old"], answer: 1, explanation: "Filipino citizens at least 18 years of age are qualified to vote.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
+            { id: 80, category: "Philippine Constitution & Gen Info", question: "Which court is the highest judicial tribunal in the Philippines?", options: ["Court of Appeals", "Sandiganbayan", "Supreme Court", "Ombudsman"], answer: 2, explanation: "The Supreme Court is the highest court of the land.", referenceUrl: "https://3d-universal.com/en/blogs/philippine-constitution-summary.html", referenceLabel: "1987 Philippine Constitution Guide" },
 
             // --- NUMERICAL REASONING ---
             { id: 81, category: "Numerical Reasoning", question: "Evaluate: 12 is 125% of what number?", options: ["9.6", "8.0", "9.0", "10.0"], answer: 0, explanation: "12 = 1.25 * N -> N = 12 / 1.25 = 9.6." },
@@ -445,8 +489,54 @@
                 .replace(/'/g, "&#39;");
         }
 
+        function sanitizeUrl(url) {
+            if (!url) return "";
+            const trimmed = String(url).trim();
+            if (/^https?:\/\//i.test(trimmed)) {
+                return trimmed;
+            }
+            return "";
+        }
+
         function initApp() {
             renderCategoryCards();
+            document.addEventListener("keydown", handleDesktopShortcuts);
+        }
+
+        function handleDesktopShortcuts(e) {
+            const quizScreen = document.getElementById("quiz-screen");
+            if (!quizScreen || quizScreen.classList.contains("hidden")) return;
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+            const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+            if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+            const q = currentSessionQuestions[currentQuestionIdx];
+            if (!q) return;
+
+            const key = e.key.toLowerCase();
+            const letterMap = { a: 0, b: 1, c: 2, d: 3, "1": 0, "2": 1, "3": 2, "4": 3 };
+
+            if (Object.prototype.hasOwnProperty.call(letterMap, key)) {
+                const idx = letterMap[key];
+                if (idx < q.options.length) {
+                    e.preventDefault();
+                    selectOption(idx);
+                }
+            } else if (e.key === "ArrowRight") {
+                e.preventDefault();
+                if (currentQuestionIdx < currentSessionQuestions.length - 1) {
+                    navigateQuestion(1);
+                }
+            } else if (e.key === "ArrowLeft") {
+                e.preventDefault();
+                if (currentQuestionIdx > 0) {
+                    navigateQuestion(-1);
+                }
+            } else if (key === "f") {
+                e.preventDefault();
+                toggleFocusMode();
+            }
         }
 
         if (document.readyState === "loading") {
@@ -464,14 +554,14 @@
                 const count = QUESTION_BANK.filter(q => q.category === cat).length;
                 const card = document.createElement("button");
                 card.type = "button";
-                card.className = "w-full text-left bg-slate-50 hover:bg-blue-50/60 border border-slate-200 hover:border-blue-300 rounded-xl p-3.5 transition cursor-pointer flex justify-between items-center group";
+                card.className = "w-full min-h-[56px] text-left bg-slate-50 hover:bg-blue-50/60 active:bg-blue-100/70 border border-slate-200 hover:border-blue-300 rounded-xl p-3.5 transition cursor-pointer flex justify-between items-center gap-3 group";
                 card.onclick = () => startQuiz(cat, 10);
                 card.innerHTML = `
-                    <div>
-                        <div class="font-bold text-sm text-slate-800 group-hover:text-govBlue">${escapeHtml(cat)}</div>
+                    <div class="min-w-0">
+                        <div class="font-bold text-sm text-slate-800 group-hover:text-govBlue truncate">${escapeHtml(cat)}</div>
                         <div class="text-xs text-slate-500">${count} items available</div>
                     </div>
-                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-govBlue text-xs transition-transform group-hover:translate-x-1"></i>
+                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-govBlue text-xs transition-transform group-hover:translate-x-1 flex-shrink-0"></i>
                 `;
                 container.appendChild(card);
             });
@@ -556,7 +646,7 @@
                 quizHeader.classList.add("hidden");
                 fsHeader.classList.remove("hidden");
 
-                if (focusLabel) focusLabel.textContent = "Exit Full Screen";
+                if (focusLabel) focusLabel.textContent = "Exit";
                 if (focusIcon) focusIcon.className = "fa-solid fa-compress";
 
                 questionCard.classList.add("my-auto", "shadow-2xl", "max-w-4xl", "mx-auto");
@@ -567,7 +657,7 @@
                 quizHeader.classList.remove("hidden");
                 fsHeader.classList.add("hidden");
 
-                if (focusLabel) focusLabel.textContent = "Focus Mode";
+                if (focusLabel) focusLabel.textContent = "Focus";
                 if (focusIcon) focusIcon.className = "fa-solid fa-expand";
 
                 questionCard.classList.remove("my-auto", "shadow-2xl", "max-w-4xl", "mx-auto");
@@ -586,7 +676,7 @@
                     currentQuestionIdx = i;
                     renderQuestion();
                 };
-                btn.className = "w-7 h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border flex-shrink-0";
+                btn.className = "w-8 h-8 md:w-7 md:h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border flex-shrink-0";
                 grid.appendChild(btn);
             }
             updateJumpGrid();
@@ -601,11 +691,12 @@
                 const isAnswered = Object.prototype.hasOwnProperty.call(userAnswers, i);
 
                 if (isCurrent) {
-                    btn.className = "w-7 h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border-2 border-govBlue bg-govBlue text-white shadow-sm flex-shrink-0";
+                    btn.className = "w-8 h-8 md:w-7 md:h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border-2 border-govBlue bg-govBlue text-white shadow-sm flex-shrink-0";
+                    btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
                 } else if (isAnswered) {
-                    btn.className = "w-7 h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border border-emerald-300 bg-emerald-50 text-emerald-700 flex-shrink-0";
+                    btn.className = "w-8 h-8 md:w-7 md:h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border border-emerald-300 bg-emerald-50 text-emerald-700 flex-shrink-0";
                 } else {
-                    btn.className = "w-7 h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100 flex-shrink-0";
+                    btn.className = "w-8 h-8 md:w-7 md:h-7 rounded-lg text-xs font-bold transition flex items-center justify-center border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100 flex-shrink-0";
                 }
                 btn.textContent = i + 1;
             }
@@ -663,13 +754,13 @@
             document.getElementById("final-time-display").textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
             if (passed) {
-                statusCard.className = "rounded-2xl p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-emerald-600 to-teal-700";
+                statusCard.className = "rounded-2xl p-5 sm:p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 bg-gradient-to-r from-emerald-600 to-teal-700";
                 statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest inline-block border border-emerald-200 bg-emerald-800/40 text-emerald-100";
                 statusBadge.textContent = "PASSED";
                 statusTitle.textContent = "Congratulations! You Passed!";
                 statusDesc.textContent = "Great job! You achieved the standard 80% passing threshold required by the Civil Service Commission.";
             } else {
-                statusCard.className = "rounded-2xl p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 bg-gradient-to-r from-rose-600 to-red-700";
+                statusCard.className = "rounded-2xl p-5 sm:p-6 md:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 bg-gradient-to-r from-rose-600 to-red-700";
                 statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest inline-block border border-rose-200 bg-rose-900/40 text-rose-100";
                 statusBadge.textContent = "NEEDS IMPROVEMENT";
                 statusTitle.textContent = "Keep Practicing!";
@@ -685,12 +776,12 @@
                 const isWeak = catPct < 80;
 
                 const item = document.createElement("div");
-                item.className = `p-4 rounded-xl border ${isWeak ? 'bg-amber-50/50 border-amber-200' : 'bg-slate-50 border-slate-200'}`;
+                item.className = `p-3.5 sm:p-4 rounded-xl border ${isWeak ? 'bg-amber-50/50 border-amber-200' : 'bg-slate-50 border-slate-200'}`;
                 
                 item.innerHTML = `
-                    <div class="flex justify-between items-center mb-1.5">
-                        <span class="font-bold text-sm text-slate-800">${escapeHtml(cat)}</span>
-                        <span class="text-xs font-bold ${isWeak ? 'text-amber-700' : 'text-emerald-700'}">${stat.correct}/${stat.total} (${catPct}%)</span>
+                    <div class="flex justify-between items-center gap-2 mb-1.5">
+                        <span class="font-bold text-xs sm:text-sm text-slate-800">${escapeHtml(cat)}</span>
+                        <span class="text-xs font-bold flex-shrink-0 ${isWeak ? 'text-amber-700' : 'text-emerald-700'}">${stat.correct}/${stat.total} (${catPct}%)</span>
                     </div>
                     <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                         <div class="${isWeak ? 'bg-amber-500' : 'bg-emerald-500'} h-full" style="width: ${catPct}%"></div>
@@ -707,9 +798,11 @@
                 const userChoice = userAnswers[idx];
                 const isAnswered = typeof userChoice === "number";
                 const isCorrect = isAnswered && userChoice === q.answer;
+                const safeUrl = sanitizeUrl(q.referenceUrl);
+                const linkText = q.referenceLabel ? escapeHtml(q.referenceLabel) : "View Reference";
 
                 const keyCard = document.createElement("div");
-                keyCard.className = `p-5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/20' : 'border-rose-200 bg-rose-50/20'}`;
+                keyCard.className = `p-4 sm:p-5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/20' : 'border-rose-200 bg-rose-50/20'}`;
 
                 let optionsHtml = '';
                 q.options.forEach((opt, oIdx) => {
@@ -718,14 +811,14 @@
 
                     if (oIdx === q.answer) {
                         optStyle = 'text-emerald-800 font-bold bg-emerald-100/70 p-2 rounded';
-                        badge = '<span class="text-xs bg-emerald-600 text-white px-2 py-0.5 rounded ml-2 font-bold">Correct Answer</span>';
+                        badge = '<span class="text-[11px] sm:text-xs bg-emerald-600 text-white px-2 py-0.5 rounded font-bold flex-shrink-0">Correct</span>';
                     } else if (oIdx === userChoice && !isCorrect) {
                         optStyle = 'text-rose-800 font-semibold bg-rose-100/70 p-2 rounded';
-                        badge = '<span class="text-xs bg-rose-600 text-white px-2 py-0.5 rounded ml-2 font-bold">Your Choice</span>';
+                        badge = '<span class="text-[11px] sm:text-xs bg-rose-600 text-white px-2 py-0.5 rounded font-bold flex-shrink-0">Your Choice</span>';
                     }
 
                     optionsHtml += `
-                        <div class="text-xs md:text-sm py-1 flex items-center justify-between gap-2 ${optStyle}">
+                        <div class="text-xs md:text-sm py-1.5 flex items-center justify-between gap-2 ${optStyle}">
                             <span>${String.fromCharCode(65 + oIdx)}. ${escapeHtml(opt)}</span>
                             ${badge}
                         </div>
@@ -733,30 +826,39 @@
                 });
 
                 const statusBadgeHtml = isCorrect
-                    ? '<span class="text-xs px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check"></i> Correct</span>'
+                    ? '<span class="text-xs px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800 flex-shrink-0"><i class="fa-solid fa-check"></i> Correct</span>'
                     : isAnswered
-                        ? '<span class="text-xs px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800"><i class="fa-solid fa-xmark"></i> Incorrect</span>'
-                        : '<span class="text-xs px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800"><i class="fa-solid fa-minus"></i> Unanswered</span>';
+                        ? '<span class="text-xs px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800 flex-shrink-0"><i class="fa-solid fa-xmark"></i> Incorrect</span>'
+                        : '<span class="text-xs px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800 flex-shrink-0"><i class="fa-solid fa-minus"></i> Unanswered</span>';
+
+                const referenceLinkHtml = safeUrl
+                    ? `<div class="mt-2.5 pt-2 border-t border-blue-200/70">
+                        <a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer" class="min-h-[36px] inline-flex items-center gap-1.5 text-xs font-semibold text-govBlue hover:text-blue-900 underline">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i> ${linkText}
+                        </a>
+                       </div>`
+                    : '';
 
                 keyCard.innerHTML = `
-                    <div class="flex items-start justify-between gap-3 mb-2">
+                    <div class="flex items-start justify-between gap-2 sm:gap-3 mb-2">
                         <span class="text-xs font-bold text-slate-400">Q${idx + 1} &bull; ${escapeHtml(q.category)}</span>
                         ${statusBadgeHtml}
                     </div>
 
                     <h4 class="font-bold text-slate-800 text-sm md:text-base mb-3 whitespace-pre-line">${escapeHtml(q.question)}</h4>
                     
-                    ${q.context ? `<div class="bg-slate-100 p-3 rounded text-xs font-mono mb-3 text-slate-700 whitespace-pre-line">${escapeHtml(q.context)}</div>` : ''}
+                    ${q.context ? `<div class="bg-slate-100 p-3 rounded text-xs font-mono mb-3 text-slate-700 whitespace-pre-line overflow-x-auto">${escapeHtml(q.context)}</div>` : ''}
 
                     <div class="space-y-1 mb-4 border-t border-b border-slate-200/60 py-2">
                         ${optionsHtml}
                     </div>
 
-                    <div class="bg-blue-50/60 border border-blue-100 p-3.5 rounded-lg text-xs md:text-sm text-slate-700">
+                    <div class="bg-blue-50/60 border border-blue-100 p-3 sm:p-3.5 rounded-lg text-xs md:text-sm text-slate-700">
                         <strong class="text-govBlue font-bold block mb-1">
                             <i class="fa-solid fa-lightbulb"></i> Solution / Explanation:
                         </strong>
                         <p class="whitespace-pre-line leading-relaxed">${escapeHtml(q.explanation)}</p>
+                        ${referenceLinkHtml}
                     </div>
                 `;
 
@@ -800,12 +902,12 @@
                 const isSelected = userAnswers[currentQuestionIdx] === idx;
                 const label = document.createElement("label");
                 label.dataset.optionIndex = idx;
-                label.className = `quiz-option-label flex items-center gap-3 p-4 rounded-xl border transition cursor-pointer ${isSelected ? 'border-govBlue bg-blue-50/50 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'}`;
+                label.className = `quiz-option-label min-h-[52px] flex items-center gap-3 p-3.5 sm:p-4 rounded-xl border transition cursor-pointer select-none ${isSelected ? 'border-govBlue bg-blue-50/70 shadow-sm' : 'border-slate-200 hover:border-slate-300 active:bg-slate-50 bg-white'}`;
                 
                 label.innerHTML = `
-                    <input type="radio" name="quiz-option" value="${idx}" ${isSelected ? 'checked' : ''} class="w-4 h-4 text-govBlue focus:ring-govBlue" onchange="selectOption(${idx})">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 font-bold text-xs flex items-center justify-center text-slate-700 flex-shrink-0">${String.fromCharCode(65 + idx)}</span>
-                    <span class="text-sm md:text-base text-slate-800 font-medium">${escapeHtml(opt)}</span>
+                    <input type="radio" name="quiz-option" value="${idx}" ${isSelected ? 'checked' : ''} class="w-4 h-4 text-govBlue focus:ring-govBlue flex-shrink-0" onchange="selectOption(${idx})">
+                    <span class="w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center flex-shrink-0 transition ${isSelected ? 'bg-govBlue text-white' : 'bg-slate-100 text-slate-700'}">${String.fromCharCode(65 + idx)}</span>
+                    <span class="text-sm md:text-base text-slate-800 font-medium leading-snug">${escapeHtml(opt)}</span>
                 `;
                 optionsContainer.appendChild(label);
             });
@@ -826,9 +928,13 @@
             labels.forEach(label => {
                 const idx = Number(label.dataset.optionIndex);
                 const isSelected = idx === optIdx;
-                label.className = `quiz-option-label flex items-center gap-3 p-4 rounded-xl border transition cursor-pointer ${isSelected ? 'border-govBlue bg-blue-50/50 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'}`;
+                label.className = `quiz-option-label min-h-[52px] flex items-center gap-3 p-3.5 sm:p-4 rounded-xl border transition cursor-pointer select-none ${isSelected ? 'border-govBlue bg-blue-50/70 shadow-sm' : 'border-slate-200 hover:border-slate-300 active:bg-slate-50 bg-white'}`;
                 const radio = label.querySelector('input[type="radio"]');
                 if (radio) radio.checked = isSelected;
+                const badge = label.querySelector('span');
+                if (badge) {
+                    badge.className = `w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center flex-shrink-0 transition ${isSelected ? 'bg-govBlue text-white' : 'bg-slate-100 text-slate-700'}`;
+                }
             });
 
             updateJumpGrid();
@@ -839,6 +945,10 @@
             if (newIdx >= 0 && newIdx < currentSessionQuestions.length) {
                 currentQuestionIdx = newIdx;
                 renderQuestion();
+                if (window.innerWidth < 768) {
+                    const card = document.getElementById("question-card");
+                    if (card) card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
             }
         }
 
